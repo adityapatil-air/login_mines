@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login with Google</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://apis.google.com/js/platform.js" async defer></script>
+  <meta name="google-signin-client_id" content="645300090722-ah859ogqkrtpn1409kc0hk564gnuundg.apps.googleusercontent.com">
+</head>
+<body>
+  <div class="header">
+    <h1>Mines</h1>
+  </div>
+  
+  <div class="page">
+    <div class="container">
+      <div class="left">
+        <div class="login">Login</div>
+        <div class="eula">Sign in with Google to start playing the game.</div>
+      </div>
+      <div class="right">
+        <div class="form">
+          <div class="g-signin2" data-onsuccess="onSignIn"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="footer">
+    <p>Copyright © 2024 adityapatil-air</p>
+  </div>
+
+  <script src="scripts.js"></script>
+</body>
+</html>

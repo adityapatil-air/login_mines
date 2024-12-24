@@ -1,0 +1,241 @@
+/* General body styles */
+body {
+    display: flex;
+    flex-direction: column; /* Stack header and main content vertically */
+    align-items: center;
+    height: 100vh;
+    background-color: #282c34;
+    margin: 0;
+}
+
+/* Header styles */
+header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between; /* Space between title and sign-out button */
+    align-items: center; /* Align items vertically */
+    padding: 20px 30px; /* Adjusted padding */
+    box-sizing: border-box; /* Include padding in width calculations */
+}
+
+h1 {
+    color: white;
+    margin: 0;
+}
+
+/* Signout button styles */
+.signout-button {
+    background-color: #f44336;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.signout-button:hover {
+    background-color: #d32f2f; /* Darker red on hover */
+}
+
+/* Main container styles */
+.main-container {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    width: 100%;
+    max-width: 1200px; /* Optional: set a max-width for the container */
+    padding: 30px; /* Increase padding around the main container */
+    box-sizing: border-box;
+    gap: 30px; /* Add gap between sidebar and grid */
+}
+
+/* Sidebar styles */
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-right: 30px; /* Increase space between sidebar and grid */
+    min-width: 200px; /* Optional: ensure sidebar has a minimum width */
+}
+
+/* Wallet box styles */
+.wallet-box {
+    margin-bottom: 20px; /* Space between wallet and game controls */
+    text-align: left;
+    background-color: #1c1e22; /* Background color to match the theme */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Optional: add shadow for better appearance */
+}
+
+.wallet-box h2 {
+    margin: 0;
+    color: white;
+}
+
+.wallet-amount {
+    font-size: 1.5rem;
+    color: #61dafb; /* Wallet amount color */
+}
+
+/* Game controls styles */
+.game-controls {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.bet-amount-box, .mines-box {
+    margin-bottom: 10px;
+}
+
+.bet-amount-box label, .mines-box label {
+    display: block;
+    color: white;
+}
+
+.bet-amount-box input, .mines-box input {
+    margin-top: 5px;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* Specific styles for the Bet button */
+.bet-button {
+    width: 120px; /* Increased width */
+    background-color: #4CAF50; /* Green color */
+    margin-bottom: 10px; /* Spacing between buttons */
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.bet-button:hover {
+    background-color: #45a049; /* Darker green on hover */
+}
+
+/* Styles for the Cashout button */
+.cashout-button {
+    width: 120px; /* Same increased width */
+    background-color: #f44336; /* Red color */
+    margin-top: 10px; /* Spacing between buttons */
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.cashout-button:hover {
+    background-color: #d32f2f; /* Darker red on hover */
+}
+
+/* Grid styles */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(5, 100px);
+    grid-gap: 10px;
+    flex: 1; /* Allow grid to take up the remaining space */
+    padding: 30px; /* Add padding inside the grid */
+}
+
+/* Card styles */
+.card {
+    width: 100px;
+    height: 100px;
+    background-color: #61dafb; /* Initial color */
+    border-radius: 10px;
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+}
+
+.card.clicked {
+    cursor: not-allowed; /* Optional: change cursor to indicate card is disabled */
+    opacity: 0.5; /* Optional: make clicked cards look faded */
+}
+
+/* New styles for the Bet Display Box on the right */
+.bet-display-box {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    min-width: 200px;
+    background-color: #1c1e22; /* Background color to match the theme */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Optional: add shadow for better appearance */
+}
+
+.bet-display-box h2 {
+    margin: 0;
+    color: white;
+}
+
+.current-bet-amount {
+    font-size: 1.5rem;
+    color: #61dafb; /* Same color as wallet amount */
+}
+
+/* Modal styles */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed;
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 8%; /* Could be more or less, depending on screen size */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3); /* Optional shadow */
+}
+
+.close-button {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close-button:hover,
+.close-button:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+#modal-ok-button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin-top: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+#modal-ok-button:hover {
+    background-color: #45a049;
+}

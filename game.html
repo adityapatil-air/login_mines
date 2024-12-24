@@ -1,0 +1,120 @@
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Card Grid</title>
+    <link rel="stylesheet" href="game.css">
+</head>
+<body>
+    <header>
+        <h1>Mines</h1>
+        <button onclick="signOut()" class="signout-button">Sign Out</button>
+    </header>
+
+    <div class="main-container">
+        <div class="sidebar">
+            <div class="wallet-box">
+                <h2>Wallet:</h2>
+                <div class="wallet-amount">$10000</div>
+            </div>
+            <div class="game-controls">
+                <div class="bet-amount-box">
+                    <label for="bet-amount">Bet Amount:</label>
+                    <input type="number" id="bet-amount" name="bet-amount" min="1" step="1" value="1">
+                </div>
+                <div class="mines-box">
+                    <label for="mines">No of BOMB'S:</label>
+                    <input type="number" id="mines" name="mines" min="1" step="1" value="1">
+                </div>
+                <button class="bet-button">Bet</button>
+                <button class="cashout-button">Cashout</button>
+            </div>
+        </div>
+        <div class="grid">
+            <div class="card" onclick="changeColor(this)"></div>
+            <div class="card" onclick="changeColor(this)"></div>
+            <div class="card" onclick="changeColor(this)"></div>
+            <div class="card" onclick="changeColor(this)"></div>
+            <div class="card" onclick="changeColor(this)"></div>
+            <div class="card" onclick="changeColor(this)"></div>
+            <div class="card" onclick="changeColor(this)"></div>
+            <div class="card" onclick="changeColor(this)"></div>
+            <div class="card" onclick="changeColor(this)"></div>
+            <div class="card" onclick="changeColor(this)"></div>
+            <div class="card" onclick="changeColor(this)"></div>
+            <div class="card" onclick="changeColor(this)"></div>
+            <div class="card" onclick="changeColor(this)"></div>
+            <div class="card" onclick="changeColor(this)"></div>
+            <div class="card" onclick="changeColor(this)"></div>
+            <div class="card" onclick="changeColor(this)"></div>
+            <div class="card" onclick="changeColor(this)"></div>
+            <div class="card" onclick="changeColor(this)"></div>
+            <div class="card" onclick="changeColor(this)"></div>
+            <div class="card" onclick="changeColor(this)"></div>
+            <div class="card" onclick="changeColor(this)"></div>
+            <div class="card" onclick="changeColor(this)"></div>
+            <div class="card" onclick="changeColor(this)"></div>
+            <div class="card" onclick="changeColor(this)"></div>
+            <div class="card" onclick="changeColor(this)"></div>
+            <div class="card" onclick="changeColor(this)"></div>
+            <!-- Repeat the card div for a total of 25 cards -->
+            <div class="card" onclick="changeColor(this)"></div>
+            <div class="card" onclick="changeColor(this)"></div>
+            <div class="card" onclick="changeColor(this)"></div>
+            <div class="card" onclick="changeColor(this)"></div>
+            <div class="card" onclick="changeColor(this)"></div>
+            <div class="card" onclick="changeColor(this)"></div>
+            <div class="card" onclick="changeColor(this)"></div>
+            <div class="card" onclick="changeColor(this)"></div>
+            <div class="card" onclick="changeColor(this)"></div>
+            <div class="card" onclick="changeColor(this)"></div>
+            <div class="card" onclick="changeColor(this)"></div>
+            <div class="card" onclick="changeColor(this)"></div>
+            <div class="card" onclick="changeColor(this)"></div>
+            <div class="card" onclick="changeColor(this)"></div>
+            <div class="card" onclick="changeColor(this)"></div>
+            <div class="card" onclick="changeColor(this)"></div>
+            <div class="card" onclick="changeColor(this)"></div>
+            <div class="card" onclick="changeColor(this)"></div>
+            <div class="card" onclick="changeColor(this)"></div>
+            <div class="card" onclick="changeColor(this)"></div>
+            <div class="card" onclick="changeColor(this)"></div>
+            <div class="card" onclick="changeColor(this)"></div>
+            <div class="card" onclick="changeColor(this)"></div>
+            <div class="card" onclick="changeColor(this)"></div>
+            <div class="card" onclick="changeColor(this)"></div>
+        </div>
+        <div class="bet-display-box">
+            <h2>Current Bet Amount:</h2>
+            <div class="current-bet-amount">$0.00</div>
+        </div>
+    </div>
+
+    <!-- Custom Modal -->
+    <div id="custom-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <p id="modal-message"></p>
+            <button id="modal-ok-button">OK</button>
+        </div>
+    </div>
+
+    <script src="game.js"></script>
+    <script>
+        // Check if user is logged in
+        if (localStorage.getItem('loggedIn') !== 'true') {
+            window.location.href = 'index.html'; // Redirect to the login page if not logged in
+        }
+    </script>
+</body>
+</html>
