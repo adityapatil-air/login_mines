@@ -1,16 +1,16 @@
 // Global variables
-let minePositions = [];
+let minePositions = []; // Stores the positions of bombs
 let walletAmount = 10000; // Initial wallet amount
-let betAmount = 0;
-let numberOfMines = 0;
-let currentBetAmount = 0; // Current bet amount for the game
+let betAmount = 0; // Player's current bet
+let numberOfMines = 0; // Number of mines set by the player
+let currentBetAmount = 0; // Tracks the reward for the current game
 
-// Function to initialize the wallet
+// Function to initialize wallet balance on page load
 function initializeWallet() {
     document.querySelector('.wallet-amount').textContent = `$${walletAmount.toFixed(2)}`;
 }
 
-// Function to handle "Start Game"
+// Function to start the game and set up mines
 function startGame() {
     const cards = document.querySelectorAll('.card');
     const minesInput = document.getElementById('mines');
@@ -20,33 +20,30 @@ function startGame() {
     betAmount = parseFloat(betInput.value);
 
     // Validate inputs
-    if (isNaN(numberOfMines) || numberOfMines <= 0 || numberOfMines > 24) {
+    if (isNaN(numberOfMines) || numberOfMines <= 0 || numberOfMines >= cards.length) {
         alert('Please enter a valid number of mines (1-24).');
         return;
     }
     if (isNaN(betAmount) || betAmount <= 0 || betAmount > walletAmount) {
-        alert('Please enter a valid bet amount (within your wallet balance).');
+        alert('Please enter a valid bet amount within your wallet balance.');
         return;
     }
 
-    // Deduct the bet amount from wallet
+    // Deduct bet amount and update wallet
     updateWallet(-betAmount);
     currentBetAmount = betAmount;
     document.querySelector('.current-bet-amount').textContent = `$${currentBetAmount.toFixed(2)}`;
 
-    // Reset and setup mines
+    // Reset and set new mines
     resetGame();
-    minePositions = [];
-    const cardIndices = [...Array(cards.length).keys()];
-    shuffleArray(cardIndices);
-    minePositions = cardIndices.slice(0, numberOfMines);
+    minePositions = generateMinePositions(cards.length, numberOfMines);
 
-    console.log('Mines set at positions:', minePositions); // Debugging
+    console.log('Mine positions:', minePositions); // Debugging
 }
 
-// Function to handle card clicks
+// Function to handle clicking on a card
 function changeColor(card) {
-    if (card.classList.contains('clicked')) return;
+    if (card.classList.contains('clicked')) return; // Prevent re-clicking on the same card
 
     const cards = Array.from(document.querySelectorAll('.card'));
     const cardIndex = cards.indexOf(card);
@@ -57,19 +54,19 @@ function changeColor(card) {
         card.classList.add('clicked');
         revealAllCards();
         setTimeout(() => {
-            alert('BOOM! You hit a mine!');
+            alert('BOOM! You hit a mine! Game over.');
             resetGame();
         }, 100);
     } else {
-        card.style.backgroundColor = 'green'; // Safe color
+        card.style.backgroundColor = 'green'; // Safe card color
         card.classList.add('clicked');
         const reward = calculateReward();
-        currentBetAmount = reward; // Update the current bet amount as the reward
+        currentBetAmount = reward; // Update the current bet amount
         document.querySelector('.current-bet-amount').textContent = `$${currentBetAmount.toFixed(2)}`;
     }
 }
 
-// Function to calculate the reward
+// Function to calculate reward based on remaining safe cards
 function calculateReward() {
     const totalCards = 25;
     const greenCards = totalCards - numberOfMines;
@@ -80,7 +77,7 @@ function calculateReward() {
     return currentBetAmount * multiplier; // Reward multiplier
 }
 
-// Function to update wallet balance
+// Function to update the wallet balance
 function updateWallet(amount) {
     walletAmount += amount;
     if (walletAmount < 0) walletAmount = 0;
@@ -92,40 +89,49 @@ function revealAllCards() {
     const cards = document.querySelectorAll('.card');
     cards.forEach((card, index) => {
         if (minePositions.includes(index)) {
-            card.style.backgroundColor = 'red'; // Reveal mine
+            card.style.backgroundColor = 'red'; // Bomb color
         } else {
-            card.style.backgroundColor = 'green'; // Reveal safe cards
+            card.style.backgroundColor = 'green'; // Safe card color
         }
         card.classList.add('clicked');
     });
 }
 
-// Function to reset the game
+// Function to reset the game board
 function resetGame() {
     const cards = document.querySelectorAll('.card');
     cards.forEach(card => {
         card.classList.remove('clicked');
-        card.style.backgroundColor = '#61dafb'; // Default color
+        card.style.backgroundColor = '#61dafb'; // Default card color
     });
     currentBetAmount = 0;
     document.querySelector('.current-bet-amount').textContent = `$0.00`;
 }
 
-// Utility function to shuffle an array
-function shuffleArray(array) {
-    for (let i = array.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]];
+// Utility function to generate random mine positions
+function generateMinePositions(totalCards, minesCount) {
+    const positions = new Set();
+    while (positions.size < minesCount) {
+        const randomIndex = Math.floor(Math.random() * totalCards);
+        positions.add(randomIndex);
+    }
+    return Array.from(positions);
+}
+
+// Function to handle "Cashout"
+function handleCashout() {
+    if (currentBetAmount > 0) {
+        alert(`You cashed out with $${currentBetAmount.toFixed(2)}!`);
+        updateWallet(currentBetAmount);
+        resetGame();
+    } else {
+        alert('No winnings to cash out. Play the game first!');
     }
 }
 
-// Event listeners
+// Event listeners for game buttons
 document.querySelector('.bet-button').addEventListener('click', startGame);
-document.querySelector('.cashout-button').addEventListener('click', () => {
-    updateWallet(currentBetAmount);
-    alert(`You cashed out with $${currentBetAmount.toFixed(2)}!`);
-    resetGame();
-});
+document.querySelector('.cashout-button').addEventListener('click', handleCashout);
 
 // Initialize the game on page load
 window.onload = function () {
