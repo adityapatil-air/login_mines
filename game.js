@@ -140,3 +140,9 @@ window.onload = function () {
     }
     initializeWallet();
 };
+
+// Sign out function
+function signOut() {
+    localStorage.setItem('loggedIn', 'false');
+    window.location.href = 'index.html';
+}
