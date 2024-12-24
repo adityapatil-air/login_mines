@@ -1,5 +1,4 @@
 // Function to handle Google Sign-In
-// Function to handle Google Sign-In
 function onSignIn(googleUser) {
     try {
         console.log('Google Sign-In successful.');
@@ -21,8 +20,6 @@ function onSignIn(googleUser) {
         alert('An error occurred during the sign-in process. Please try again.');
     }
 }
-}
-
 
 // Function to handle Sign-Out
 function signOut() {
