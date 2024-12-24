@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Login with Google</title>
   <link rel="stylesheet" href="styles.css">
-  <script src="https://apis.google.com/js/platform.js" async defer></script>
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
   <meta name="google-signin-client_id" content="762244854590-8v5d1dj1j4jhcrisqk6oq9okk0j25099.apps.googleusercontent.com">
 </head>
 <body>
@@ -21,7 +21,14 @@
       </div>
       <div class="right">
         <div class="form">
-          <div class="g-signin2" data-onsuccess="onSignIn"></div>
+          <div id="g_id_onload"
+               data-client_id="YOUR_CLIENT_ID.apps.googleusercontent.com"
+               data-context="signin"
+               data-ux_mode="popup"
+               data-callback="onSignIn"
+               data-auto_prompt="false">
+          </div>
+          <div class="g_id_signin" data-type="standard"></div>
         </div>
       </div>
     </div>
