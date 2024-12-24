@@ -32,32 +32,8 @@
             </div>
         </div>
         <div class="grid">
-            <!-- Create a 5x5 grid of cards -->
-            <div class="card" onclick="changeColor(this)"></div>
-            <div class="card" onclick="changeColor(this)"></div>
-            <div class="card" onclick="changeColor(this)"></div>
-            <div class="card" onclick="changeColor(this)"></div>
-            <div class="card" onclick="changeColor(this)"></div>
-            <div class="card" onclick="changeColor(this)"></div>
-            <div class="card" onclick="changeColor(this)"></div>
-            <div class="card" onclick="changeColor(this)"></div>
-            <div class="card" onclick="changeColor(this)"></div>
-            <div class="card" onclick="changeColor(this)"></div>
-            <div class="card" onclick="changeColor(this)"></div>
-            <div class="card" onclick="changeColor(this)"></div>
-            <div class="card" onclick="changeColor(this)"></div>
-            <div class="card" onclick="changeColor(this)"></div>
-            <div class="card" onclick="changeColor(this)"></div>
-            <div class="card" onclick="changeColor(this)"></div>
-            <div class="card" onclick="changeColor(this)"></div>
-            <div class="card" onclick="changeColor(this)"></div>
-            <div class="card" onclick="changeColor(this)"></div>
-            <div class="card" onclick="changeColor(this)"></div>
-            <div class="card" onclick="changeColor(this)"></div>
-            <div class="card" onclick="changeColor(this)"></div>
-            <div class="card" onclick="changeColor(this)"></div>
-            <div class="card" onclick="changeColor(this)"></div>
-            <div class="card" onclick="changeColor(this)"></div>
+            <!-- Create 25 cards -->
+            ${Array(25).fill('<div class="card" onclick="changeColor(this)"></div>').join('')}
         </div>
         <div class="bet-display-box">
             <h2>Current Bet Amount:</h2>
