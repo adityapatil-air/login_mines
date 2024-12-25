@@ -94,6 +94,9 @@ function changeColor(card) {
         currentBetAmount = reward; // Update the current bet amount
         document.querySelector('.current-bet-amount').textContent = `$${currentBetAmount.toFixed(2)}`;
         console.log('ChangeColor: Safe card clicked. Current reward:', currentBetAmount);
+
+        // Increase the wallet amount when a green card is revealed
+        updateWallet(reward);
     }
 }
 
@@ -106,7 +109,7 @@ function calculateReward() {
     const multiplier = remainingGreenCards > 0 ? totalCards / remainingGreenCards : 1;
 
     console.log('CalculateReward: Multiplier:', multiplier);
-    return currentBetAmount * multiplier; // Reward multiplier
+    return betAmount * multiplier; // Reward based on initial bet amount
 }
 
 // Function to update wallet balance locally and on the server
