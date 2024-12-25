@@ -79,7 +79,7 @@ function changeColor(card) {
         card.style.backgroundColor = 'green'; // Safe card color
         card.classList.add('clicked');
         const reward = calculateReward();
-        currentBetAmount = reward; // Update the current bet amount
+        currentBetAmount += reward; // Update the current bet amount
         document.querySelector('.current-bet-amount').textContent = `$${currentBetAmount.toFixed(2)}`;
     }
 }
