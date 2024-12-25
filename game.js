@@ -101,8 +101,10 @@ function updateWallet(amount) {
     if (walletAmount < 0) walletAmount = 0;
 
     const email = localStorage.getItem('currentUser');
-    // Update wallet in localStorage and display
-    localStorage.setItem(`wallet_${email}`, walletAmount);
+    if (email) {
+        // Update wallet in localStorage and display
+        localStorage.setItem(`wallet_${email}`, walletAmount);
+    }
     document.querySelector('.wallet-amount').textContent = `$${walletAmount.toFixed(2)}`;
 
     // Sync with the backend
