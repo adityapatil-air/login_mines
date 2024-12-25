@@ -5,8 +5,16 @@ let betAmount = 0; // Player's current bet
 let numberOfMines = 0; // Number of mines set by the player
 let currentBetAmount = 0; // Tracks the reward for the current game
 
-// Function to initialize wallet balance on page load
-function initializeWallet() {
+// Initialize the wallet on page load
+async function initializeWallet() {
+    const email = localStorage.getItem('currentUser');
+    if (!email) {
+        alert('You are not logged in.');
+        window.location.href = 'index.html';
+        return;
+    }
+
+    const walletAmount = parseFloat(localStorage.getItem('wallet')) || 0;
     document.querySelector('.wallet-amount').textContent = `$${walletAmount.toFixed(2)}`;
 }
 
@@ -15,7 +23,7 @@ function startGame() {
     const cards = document.querySelectorAll('.card');
     const minesInput = document.getElementById('mines');
     const betInput = document.getElementById('bet-amount');
-    
+
     numberOfMines = parseInt(minesInput.value, 10);
     betAmount = parseFloat(betInput.value);
 
@@ -77,11 +85,33 @@ function calculateReward() {
     return currentBetAmount * multiplier; // Reward multiplier
 }
 
-// Function to update the wallet balance
+// Update wallet balance on the server
+async function updateServerWallet() {
+    const email = localStorage.getItem('currentUser');
+    const wallet = parseFloat(localStorage.getItem('wallet')) || 0;
+
+    try {
+        await fetch('http://localhost:3000/wallet', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email, wallet }),
+        });
+        console.log('Wallet updated on the server.');
+    } catch (error) {
+        console.error('Error updating wallet:', error);
+    }
+}
+
+// Update wallet locally and on the server
 function updateWallet(amount) {
+    let walletAmount = parseFloat(localStorage.getItem('wallet')) || 0;
     walletAmount += amount;
     if (walletAmount < 0) walletAmount = 0;
+
+    localStorage.setItem('wallet', walletAmount); // Update locally
     document.querySelector('.wallet-amount').textContent = `$${walletAmount.toFixed(2)}`;
+
+    updateServerWallet(); // Sync with server
 }
 
 // Function to reveal all cards after hitting a mine
@@ -133,7 +163,7 @@ function handleCashout() {
 document.querySelector('.bet-button').addEventListener('click', startGame);
 document.querySelector('.cashout-button').addEventListener('click', handleCashout);
 
-// Initialize the game on page load
+// Initialize game on page load
 window.onload = function () {
     if (localStorage.getItem('loggedIn') !== 'true') {
         window.location.href = 'index.html'; // Redirect to login if not logged in
@@ -141,7 +171,7 @@ window.onload = function () {
     initializeWallet();
 };
 
-// Sign out function
+// Sign-out functionality
 function signOut() {
     localStorage.setItem('loggedIn', 'false');
     window.location.href = 'index.html';
