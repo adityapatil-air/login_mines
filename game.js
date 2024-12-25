@@ -15,11 +15,11 @@ async function initializeWallet() {
     }
 
     // Load wallet amount from localStorage
-    let storedWalletAmount = localStorage.getItem('wallet');
+    let storedWalletAmount = localStorage.getItem(`wallet_${email}`);
     if (storedWalletAmount === null) {
         // Set default wallet amount for new users
         walletAmount = 10000;
-        localStorage.setItem('wallet', walletAmount);
+        localStorage.setItem(`wallet_${email}`, walletAmount);
     } else {
         walletAmount = parseFloat(storedWalletAmount);
     }
@@ -100,8 +100,9 @@ function updateWallet(amount) {
     walletAmount += amount;
     if (walletAmount < 0) walletAmount = 0;
 
+    const email = localStorage.getItem('currentUser');
     // Update wallet in localStorage and display
-    localStorage.setItem('wallet', walletAmount);
+    localStorage.setItem(`wallet_${email}`, walletAmount);
     document.querySelector('.wallet-amount').textContent = `$${walletAmount.toFixed(2)}`;
 
     // Sync with the backend
