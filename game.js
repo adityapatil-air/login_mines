@@ -181,7 +181,8 @@ window.onload = function () {
 
 // Sign-out functionality
 function signOut() {
-    localStorage.clear();
+    // Keep wallet data between sessions, remove user session data
+    localStorage.removeItem('currentUser');
     window.location.href = 'index.html';
 }
 
