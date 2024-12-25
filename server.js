@@ -4,46 +4,34 @@ const cors = require('cors');
 const app = express();
 const PORT = 3000;
 
-// In-memory user data store (you can replace this with a database like MongoDB, MySQL, etc.)
-let users = [
-  { userId: 'admin', password: 'admin123' }, // Example user
-];
+// In-memory user data store
+let users = {};
 
 // Middleware setup
-app.use(cors()); // Allow cross-origin requests from the frontend
-app.use(bodyParser.json()); // To parse JSON bodies
+app.use(cors());
+app.use(bodyParser.json());
 
-// Login Route
-app.post('/login', (req, res) => {
-  const { userId, password } = req.body;
-
-  // Check if the user exists
-  const user = users.find(u => u.userId === userId && u.password === password);
-  
-  if (user) {
-    res.json({ message: 'Login successful' });
-  } else {
-    res.status(401).json({ message: 'Invalid credentials' });
-  }
+// Route to get wallet balance
+app.get('/wallet/:email', (req, res) => {
+    const { email } = req.params;
+    if (users[email]) {
+        res.json({ wallet: users[email].wallet });
+    } else {
+        res.status(404).json({ message: 'User not found' });
+    }
 });
 
-// Create Account Route
-app.post('/create-account', (req, res) => {
-  const { userId, password } = req.body;
-
-  // Check if the user already exists
-  const existingUser = users.find(u => u.userId === userId);
-
-  if (existingUser) {
-    return res.status(400).json({ message: 'User ID already exists' });
-  }
-
-  // Create a new user
-  users.push({ userId, password });
-  res.json({ message: 'Account created successfully' });
+// Route to update wallet balance
+app.post('/wallet', (req, res) => {
+    const { email, wallet } = req.body;
+    if (!email || typeof wallet !== 'number') {
+        return res.status(400).json({ message: 'Invalid data' });
+    }
+    users[email] = { wallet };
+    res.json({ message: 'Wallet updated successfully', wallet });
 });
 
-// Start server
+// Start the server
 app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
+    console.log(`Server running on http://localhost:${PORT}`);
 });
