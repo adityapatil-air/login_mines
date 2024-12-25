@@ -34,29 +34,20 @@ function startGame() {
     const minesInput = document.getElementById('mines');
     const betInput = document.getElementById('bet-amount');
 
-    // Validate wallet balance
-    if (walletAmount <= 0) {
-        alert('Your wallet is empty! You cannot place a bet.');
-        console.log('StartGame: Wallet balance is insufficient.');
-        return;
-    }
-
     numberOfMines = parseInt(minesInput.value, 10);
     betAmount = parseFloat(betInput.value);
 
     // Validate inputs
     if (isNaN(numberOfMines) || numberOfMines <= 0 || numberOfMines >= cards.length) {
         alert('Please enter a valid number of mines (1-24).');
-        console.log('StartGame: Invalid number of mines entered.');
         return;
     }
     if (isNaN(betAmount) || betAmount <= 0 || betAmount > walletAmount) {
         alert('Please enter a valid bet amount within your wallet balance.');
-        console.log('StartGame: Invalid bet amount entered.');
         return;
     }
 
-    // Deduct bet amount and update wallet
+    // Deduct bet amount from wallet and set current bet amount
     updateWallet(-betAmount);
     currentBetAmount = betAmount;
     document.querySelector('.current-bet-amount').textContent = `$${currentBetAmount.toFixed(2)}`;
@@ -64,13 +55,11 @@ function startGame() {
     // Reset and set new mines
     resetGame();
     minePositions = generateMinePositions(cards.length, numberOfMines);
-    console.log('Mine positions:', minePositions);
 }
 
 // Function to handle clicking on a card
 function changeColor(card) {
     if (card.classList.contains('clicked')) {
-        console.log('ChangeColor: Card already clicked.');
         return; // Prevent re-clicking on the same card
     }
 
@@ -86,17 +75,12 @@ function changeColor(card) {
             alert('BOOM! You hit a mine! Game over.');
             resetGame();
         }, 100);
-        console.log('ChangeColor: Mine clicked. Game over.');
     } else {
         card.style.backgroundColor = 'green'; // Safe card color
         card.classList.add('clicked');
         const reward = calculateReward();
         currentBetAmount = reward; // Update the current bet amount
         document.querySelector('.current-bet-amount').textContent = `$${currentBetAmount.toFixed(2)}`;
-        console.log('ChangeColor: Safe card clicked. Current reward:', currentBetAmount);
-
-        // Increase the wallet amount when a green card is revealed
-        updateWallet(reward);
     }
 }
 
@@ -108,7 +92,6 @@ function calculateReward() {
     const remainingGreenCards = greenCards - revealedCards;
     const multiplier = remainingGreenCards > 0 ? totalCards / remainingGreenCards : 1;
 
-    console.log('CalculateReward: Multiplier:', multiplier);
     return betAmount * multiplier; // Reward based on initial bet amount
 }
 
@@ -120,7 +103,6 @@ function updateWallet(amount) {
     // Update wallet in localStorage and display
     localStorage.setItem('wallet', walletAmount);
     document.querySelector('.wallet-amount').textContent = `$${walletAmount.toFixed(2)}`;
-    console.log('UpdateWallet: New wallet amount:', walletAmount);
 
     // Sync with the backend
     updateServerWallet();
@@ -135,9 +117,8 @@ async function updateServerWallet() {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ email, wallet: walletAmount }),
         });
-        console.log('UpdateServerWallet: Wallet updated on the server.');
     } catch (error) {
-        console.error('UpdateServerWallet: Error updating wallet:', error);
+        console.error('Error updating wallet:', error);
     }
 }
 
@@ -152,7 +133,6 @@ function revealAllCards() {
         }
         card.classList.add('clicked');
     });
-    console.log('RevealAllCards: All cards revealed.');
 }
 
 // Function to reset the game board
@@ -164,7 +144,6 @@ function resetGame() {
     });
     currentBetAmount = 0;
     document.querySelector('.current-bet-amount').textContent = `$0.00`;
-    console.log('ResetGame: Game reset.');
 }
 
 // Utility function to generate random mine positions
@@ -183,10 +162,8 @@ function handleCashout() {
         alert(`You cashed out with $${currentBetAmount.toFixed(2)}!`);
         updateWallet(currentBetAmount);
         resetGame();
-        console.log('HandleCashout: Cashout successful. Amount:', currentBetAmount);
     } else {
         alert('No winnings to cash out. Play the game first!');
-        console.log('HandleCashout: No winnings to cash out.');
     }
 }
 
@@ -203,7 +180,6 @@ window.onload = function () {
 function signOut() {
     localStorage.clear();
     window.location.href = 'index.html';
-    console.log('SignOut: User signed out.');
 }
 
 // Event listeners for game buttons
