@@ -77,6 +77,7 @@
         function attemptReveal(card) {
             if (betPlaced) {
                 changeColor(card);
+                betPlaced = false; // Reset bet status after a card is revealed
             } else {
                 alert('Please place a bet before revealing a card.');
             }
